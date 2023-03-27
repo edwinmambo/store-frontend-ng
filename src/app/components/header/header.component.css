@@ -1,0 +1,22 @@
+.cart-icon {
+  position: relative;
+}
+
+.cart-counter {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  z-index: 1;
+}
+
+.cart-counter .badge {
+  font-size: 1rem;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.cart-icon:hover .cart-counter {
+  top: -20px;
+}

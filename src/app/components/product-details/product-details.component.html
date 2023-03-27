@@ -1,0 +1,51 @@
+<div class="container my-5 mx-auto" *ngIf="product">
+  <h2 class="mb-5">
+    {{ product.name }}<span>{{ product.category }}</span>
+  </h2>
+  <div class="row">
+    <div class="col-md-6 col-lg-4 col-xl-3">
+      <img
+        src="{{ product.imageUrl }}"
+        class="img-fluid w-100 h-auto"
+        alt="{{ product.name }}"
+      />
+    </div>
+    <div class="col-md-6 col-lg-6 col-xl-4">
+      <p>{{ product.description }}</p>
+      <p class="text-muted">
+        Price: <i class="bi bi-currency-dollar"></i>
+        <span class="font-weight-bold">{{ product.price }}</span>
+      </p>
+      <div class="d-flex justify-content-between align-items-center">
+        <button
+          type="button"
+          class="btn btn-info text-light btn-outline-secondary mt-3"
+          routerLink="/products"
+        >
+          <i class="bi bi-chevron-double-left"></i>
+          Back
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary text-light btn-outline-secondary mt-3"
+          (click)="addToCart(product)"
+        >
+          Add to Cart
+          <i class="bi bi-cart-plus"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-info text-light btn-outline-secondary mt-3"
+          routerLink="/cart"
+        >
+          View Cart
+          <i class="bi bi-chevron-double-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!product">
+  <h2>No Such product</h2>
+</div>
