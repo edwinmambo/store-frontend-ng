@@ -24,16 +24,16 @@ This application makes use of the following libraries:
 
 2. ### Install the dependencies
 
-```bash
-npm install --global yarn
-yarn
-```
+   ```bash
+   npm install --global yarn
+   yarn
+   ```
 
 3. ### Run the application
 
-```bash
-yarn start
-```
+   ```bash
+   yarn start
+   ```
 
 4. ### Run the api
 
