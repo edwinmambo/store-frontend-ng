@@ -1,0 +1,8 @@
+.row {
+  min-height: calc(100vh-250px);
+}
+
+td.trash,
+i.trash {
+  cursor: pointer;
+}

@@ -1,0 +1,158 @@
+<div class="row">
+  <h2 class="offset-md-2 my-3">Checkout Form</h2>
+  <div class="col-md-8 offset-md-2">
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="name"
+        />
+        <div
+          *ngIf="
+            checkoutForm.get('name')?.invalid &&
+            (checkoutForm.get('name')?.dirty ||
+              checkoutForm.get('name')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="checkoutForm.get('name')?.errors?.['required']">
+            Name is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          formControlName="email"
+        />
+        <div
+          *ngIf="
+            checkoutForm.get('email')?.invalid &&
+            (checkoutForm.get('email')?.dirty ||
+              checkoutForm.get('email')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="checkoutForm.get('email')?.errors?.['required']">
+            Email is required
+          </div>
+          <div *ngIf="checkoutForm.get('email')?.errors?.['email']">
+            Invalid email format
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input
+          type="text"
+          id="phone"
+          class="form-control"
+          formControlName="phone"
+        />
+        <div
+          *ngIf="
+            checkoutForm.get('phone')?.invalid &&
+            (checkoutForm.get('phone')?.dirty ||
+              checkoutForm.get('phone')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="checkoutForm.get('phone')?.errors?.['required']">
+            Phone is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="city">City</label>
+        <input
+          type="text"
+          id="city"
+          class="form-control"
+          formControlName="city"
+        />
+        <div
+          *ngIf="
+            checkoutForm.get('city')?.invalid &&
+            (checkoutForm.get('city')?.dirty ||
+              checkoutForm.get('city')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="checkoutForm.get('city')?.errors?.['required']">
+            City is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="state">State</label>
+        <input
+          type="text"
+          id="state"
+          class="form-control"
+          formControlName="state"
+        />
+        <div
+          *ngIf="
+            checkoutForm.get('state')?.invalid &&
+            (checkoutForm.get('state')?.dirty ||
+              checkoutForm.get('state')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="checkoutForm.get('state')?.errors?.['required']">
+            State is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="zip">Zip</label>
+        <input
+          type="text"
+          id="zip"
+          class="form-control"
+          formControlName="zip"
+        />
+        <div
+          *ngIf="
+            checkoutForm.get('zip')?.invalid &&
+            (checkoutForm.get('zip')?.dirty || checkoutForm.get('zip')?.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="checkoutForm.get('zip')?.errors?.['required']">
+            Zip is required
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div
+    class="col-md-8 offset-md-2 d-flex justify-content-between align-items-center"
+  >
+    <div class="mt-4">
+      <button
+        type="button"
+        class="btn btn-info text-light btn-outline-secondary"
+        routerLink="/cart"
+      >
+        <i class="bi bi-chevron-double-left"></i>
+        Back
+      </button>
+      <button
+        type="button"
+        class="btn btn-success text-light btn-outline-secondary ml-2"
+        (click)="onSubmit()"
+        routerLink="/confirmation"
+      >
+        Confirm
+        <i class="bi bi-check2-all"></i>
+      </button>
+    </div>
+  </div>
+</div>
