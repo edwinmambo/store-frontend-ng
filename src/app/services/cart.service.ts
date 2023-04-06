@@ -1,68 +1,71 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CartItem } from '../models/cart-item';
+import { Product } from '../models/product';
+import { CartProduct } from '../models/cart-product';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private apiURL = '/assets/cart.json';
-  items!: CartItem[];
+  cart: CartProduct[] = JSON.parse(
+    sessionStorage.getItem('storefront-cart') || '[]'
+  );
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
-  addToCart(item: CartItem): CartItem[] {
-    if (
-      this.items.filter((element) => {
-        return element.id === item.id;
-      }).length
-    ) {
-      item.quantity += 1;
-      let toUpdate = this.items.find((element) => element.id == item.id);
-      if (toUpdate) toUpdate.quantity += 1;
-    } else {
-      this.items.push(item);
+  addToCart = (product: Product, amount: number): void => {
+    const existingProductIndex = this.cart.findIndex(
+      (currentProduct) => currentProduct.id === product.id
+    );
+
+    if (existingProductIndex !== -1) {
+      const updatedAmount = this.cart[existingProductIndex].amount + amount;
+      this.cart[existingProductIndex] = {
+        ...product,
+        amount: updatedAmount,
+      };
+      alert(
+        `Updated amount of product: ${product.name} - new amount: ${updatedAmount}`
+      );
+      return;
     }
-    return this.items;
-  }
 
-  removeFromCart(item: CartItem): CartItem[] {
-    if (
-      this.items.filter((element) => {
-        return element.id == item.id;
-      }).length
-    ) {
-      item.quantity -= 1;
-      let toUpdate = this.items.find((element) => element.id == item.id);
-      if (toUpdate) toUpdate.quantity -= 1;
-    } else {
-      this.items.shift();
-    }
-    return this.items;
-  }
+    this.cart.push({
+      ...product,
+      amount: amount,
+    });
 
-  getAllItems() {
-    return this.http.get<CartItem[]>(this.apiURL);
-  }
+    console.log(this.cart);
 
-  clearCart() {
-    this.items = [];
-    return this.items;
-  }
+    sessionStorage.setItem('storefront-cart', JSON.stringify(this.cart));
+    alert(`Added product to cart: ${product.name} - amount: ${amount}`);
+  };
 
-  getTotalPrice() {
-    if (!this.items || this.items.length) return 0;
-    else
-      return this.items.reduce((accumulator, currentValue) => {
-        return accumulator + currentValue.price * currentValue.quantity;
-      }, 0);
-  }
+  removeFromCart = (id: number): void => {
+    this.cart = this.cart.filter((currentProduct) => currentProduct.id !== id);
+    sessionStorage.setItem('storefront-cart', JSON.stringify(this.cart));
+  };
 
-  getTotalItems() {
-    if (!this.items || this.items.length) return 0;
-    else
-      return this.items.reduce((accumulator, currentValue) => {
-        return accumulator + currentValue.quantity;
-      }, 0);
-  }
+  updateAmount = (id: number, amount: number): void => {
+    this.cart = this.cart.map((currentProduct) => {
+      if (currentProduct.id === id) {
+        return {
+          ...currentProduct,
+          amount: amount,
+        };
+      }
+      return currentProduct;
+    });
+    sessionStorage.setItem('storefront-cart', JSON.stringify(this.cart));
+  };
+
+  getCartProducts = (): CartProduct[] => {
+    return this.cart;
+  };
+
+  clearCart = () => {
+    this.cart = [];
+    sessionStorage.removeItem('storefront-cart');
+  };
 }

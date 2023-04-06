@@ -10,7 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit {
-  product!: Product | undefined;
+  product!: Product | null;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,16 +24,12 @@ export class ProductDetailsComponent implements OnInit {
 
   getProduct(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.productService
-      .getProducts()
-      .subscribe(
-        (products) =>
-          (this.product = products.find((element) => element.id == id))
-      );
+    this.productService.getProduct(id).subscribe((product) => {
+      this.product = product;
+    });
   }
 
-  addToCart(product: Product) {
-    let { id, name, price } = product;
-    this.cartService.addToCart({ id, name, price, quantity: 1 });
+  addToCart(product: Product, amount: number = 1) {
+    this.cartService.addToCart(product, amount);
   }
 }

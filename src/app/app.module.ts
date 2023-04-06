@@ -12,6 +12,8 @@ import { CheckoutFormComponent } from './components/checkout-form/checkout-form.
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { ApiService } from './services/api.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,9 @@ import { FooterComponent } from './components/footer/footer.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientInMemoryWebApiModule.forRoot(ApiService, {
+      dataEncapsulation: false,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

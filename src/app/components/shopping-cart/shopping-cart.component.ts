@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CartItem } from 'src/app/models/cart-item';
+import { CartProduct } from 'src/app/models/cart-product';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -8,41 +8,40 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./shopping-cart.component.css'],
 })
 export class ShoppingCartComponent implements OnInit {
-  cartItems!: CartItem[];
+  cartProducts!: CartProduct[];
   totalPrice: number = 0;
   totalItems: number = 0;
 
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.getCartItems();
+    this.cartProducts = this.cartService.getCartProducts();
+    this.totalItems = this.cartProducts.length;
+    this.calculateTotal();
   }
 
-  getCartItems() {
-    this.cartService
-      .getAllItems()
-      .subscribe((items) => (this.cartItems = items));
-    this.totalPrice = this.cartService.getTotalPrice();
-    this.totalItems = this.cartService.getTotalItems();
-  }
+  calculateTotal = () => {
+    const cart = this.cartService.getCartProducts();
+    // this calculates the sum but has to many digits like 19,0000000001
+    const totalSum = cart.reduce(
+      (prev: number, prod: CartProduct) => prev + prod.price * prod.amount,
+      0
+    );
+    // total price after formatting
+    this.totalPrice = this.calculateTotalPrice(totalSum);
+  };
 
-  removeItem(cartItem: CartItem) {
-    this.cartItems = this.cartService.removeFromCart(cartItem);
-  }
+  deleteProduct = (id: number) => {
+    this.cartProducts = this.cartProducts.filter((p) => p.id !== id);
+  };
+
+  calculateTotalPrice = (sum: number): number => {
+    // remove the extra digits
+    const trimmedSum = sum.toFixed(2);
+    return Number(trimmedSum);
+  };
 
   clearCartItems() {
-    this.cartItems = this.cartItems = this.cartService.clearCart();
+    this.cartService.clearCart();
   }
-
-  // getTotalPrice() {
-  //   return this.cartItems.reduce((accumulator, currentValue) => {
-  //     return accumulator + currentValue.price;
-  //   }, 0);
-  // }
-
-  // getTotalItems() {
-  //   return this.cartItems.reduce((accumulator, currentValue) => {
-  //     return accumulator + currentValue.quantity;
-  //   }, 0);
-  // }
 }
