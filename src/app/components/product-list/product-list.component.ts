@@ -10,6 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  contentLoaded: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -17,23 +18,13 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productService
-      .getProducts()
-      .subscribe((data) => (this.products = data));
-    // this.productService.getProducts().subscribe((data: any) => {
-    //   console.log(data['products'], typeof data);
-    //   Object.entries(data).forEach(([key, value]) =>
-    //     console.log(`${key}: ${value}, ${typeof key}, ${typeof value}`)
-    //   ); // this.products = data['products'];
-    //   // console.log(products.products);
-    // });
-    this.products.forEach((item) => {
-      // item.quantity = 0;
+    this.productService.getProducts().subscribe((data) => {
+      this.products = data;
+      this.contentLoaded = true;
     });
   }
 
-  addToCart(product: Product) {
-    let { id, name, price } = product;
-    this.cartService.addToCart({ id, name, price, quantity: 1 });
+  addToCart(product: Product, amount: number) {
+    this.cartService.addToCart(product, amount);
   }
 }

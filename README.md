@@ -1,27 +1,55 @@
-# StoreFrontendNg
+# Storefront Backend Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.4.
+## Introduction
 
-## Development server
+This repo contains an angular storefront frontend that connects to the database for communication with a backend api.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Required Technologies
 
-## Code scaffolding
+This application makes use of the following libraries:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular as the building block
+- Bootstrap for styling
+- Bootstrap icons
 
-## Build
+## Setup
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. ### Get the project locally
 
-## Running unit tests
+   Clone the project here on github
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+   ```bash
+   git clone https://github.com/edwinmambo/store-frontend-ng.git
+   ```
 
-## Running end-to-end tests
+2. ### Install the dependencies
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+   ```bash
+   npm install --global yarn
+   yarn
+   ```
 
-## Further help
+3. ### Run the application
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+   ```bash
+   yarn start
+   ```
+
+4. ### Run the api
+
+   ```bash
+   # In a separate terminal
+   yarn watch
+   ```
+
+## Usage
+
+The server will run on `localhost:4200/` where the routes will be under the specific endpoints.
+
+## Examples
+
+Products: &nbsp; `http:localhost:4200/products`
+
+cart: &emsp; `http:localhost:4200/cart`
+
+product/:id: &emsp; `http:localhost:4200/products/:id`

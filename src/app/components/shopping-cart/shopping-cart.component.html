@@ -13,13 +13,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of cartItems">
+          <tr *ngFor="let item of cartProducts">
             <td>{{ item.name }}</td>
             <td>{{ item.price | currency }}</td>
             <td>{{ item.quantity }}</td>
-            <td>{{ item.price * item.quantity | currency }}</td>
-            <td class="trash text-danger" (click)="removeItem(item)">
-              <a (click)="removeItem(item)" *ngIf="cartItems.length">
+            <td>{{ item.price * item.amount | currency }}</td>
+            <td class="trash text-danger" (click)="deleteProduct(item.id)">
+              <a (click)="deleteProduct(item.id)" *ngIf="cartProducts.length">
                 <i class="bi bi-trash trash"></i>
               </a>
             </td>
